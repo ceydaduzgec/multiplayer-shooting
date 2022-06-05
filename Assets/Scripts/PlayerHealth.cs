@@ -38,7 +38,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable {
     private Animator animator;
 
     private FirstPersonController fpController;
-    private IKControl ikControl;
     private Slider healthSlider;
     private Image damageImage;
     private int currentHealth;
@@ -52,7 +51,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable {
     /// </summary>
     void Start() {
         fpController = GetComponent<FirstPersonController>();
-        ikControl = GetComponentInChildren<IKControl>();
         damageImage = GameObject.FindGameObjectWithTag("Screen").transform.Find("DamageImage").GetComponent<Image>();
         healthSlider = GameObject.FindGameObjectWithTag("Screen").GetComponentInChildren<Slider>();
         currentHealth = startingHealth;
@@ -108,7 +106,6 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable {
     [PunRPC]
     void Death(string enemyName) {
         isDead = true;
-        ikControl.enabled = false;
         nameTag.gameObject.SetActive(false);
         if (photonView.IsMine) {
             fpController.enabled = false;
